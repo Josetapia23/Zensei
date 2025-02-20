@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, Animated } from 'react-native';
 import * as Font from 'expo-font';
 
-export default function SplashScreen({ onFinish }) {
+export default function SplashScreen({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const fadeAnim = new Animated.Value(0);
-  const textTop = "Zen";
-  const textBottom = "sei";
+  const textTop = "ZEN";
+  const textBottom = "SEI";
 
   // Cargar fuente personalizada
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function SplashScreen({ onFinish }) {
         useNativeDriver: true,
       }).start(() => {
         setTimeout(() => {
-          onFinish();
+          navigation.replace('Welcome'); // Navegar a welcome después de 3.5 segundos
         }, 1500);
       });
     }

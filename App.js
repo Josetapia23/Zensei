@@ -1,23 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
-import SplashScreen from './src/screens/SplashScreen';
+import React from 'react';
+import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleFinish = () => {
-    setIsLoading(false);
-  };
-
-  return (
-    <View style={{ flex: 1 }}>
-      {isLoading ? (
-        <SplashScreen onFinish={handleFinish} />
-      ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Bienvenido a Zensei</Text>
-        </View>
-      )}
-    </View>
-  );
+  return <AppNavigator />;
 }
