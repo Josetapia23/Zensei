@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import BottomGradient from '../components/gradients/BottomGradient';
 export default function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
@@ -22,11 +22,8 @@ export default function WelcomeScreen({ navigation }) {
       </ImageBackground>
 
       {/* Degradado en la parte inferior (subido un poco más) */}
-      <LinearGradient
-        colors={['transparent', '#76B3E5']}
-        locations={[0.1, 1]} // Subimos el inicio del azul
-        style={styles.gradient}
-      />
+      <BottomGradient />
+
 
       {/* Contenedor de botones encima del degradado */}
       <View style={styles.buttonContainer}>
@@ -88,13 +85,6 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: 'contain',
     marginBottom: '10%' // mover la img central
-  },
-  gradient: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: '55%',  // Subimos el degradado más arriba
   },
   buttonContainer: {
     position: 'absolute',

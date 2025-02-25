@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, BackHandler} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import InputField from '../components/inputs/InputField';
+import BottomGradient from '../components/gradients/BottomGradient';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setname] = useState('');
 
   const handleRegister = () => {
     // Lógica de registro
@@ -32,6 +33,7 @@ const RegisterScreen = ({ navigation }) => {
         style={styles.background}
         resizeMode="cover"
       >
+        <BottomGradient />
         <View style={styles.content}>
           {/* Encabezado con texto */}
           <View style={styles.header}>
@@ -39,6 +41,15 @@ const RegisterScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.formContainer}>
+
+          <InputField
+              label="Nombre"
+              placeholder="Ingresa tu Nombre"
+              value={name}
+              onChangeText={setname}
+              keyboardType="phone-pad"
+            />
+
             <InputField
               label="Correo electrónico"
               placeholder="Zen@correo.com"
@@ -47,13 +58,6 @@ const RegisterScreen = ({ navigation }) => {
               keyboardType="email-address"
             />
 
-            <InputField
-              label="Número de teléfono"
-              placeholder="Ingresa tu número"
-              value={phone}
-              onChangeText={setPhone}
-              keyboardType="phone-pad"
-            />
 
             <InputField
               label="Contraseña"

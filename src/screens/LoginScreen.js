@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import InputField from '../components/inputs/InputField';
+import BottomGradient from '../components/gradients/BottomGradient';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -19,6 +20,7 @@ const LoginScreen = ({ navigation }) => {
         style={styles.background}
         resizeMode="cover"
       >
+        <BottomGradient />
         <View style={styles.content}>
           <Image
             source={require('../assets/images/caritaWelcome.png')}
