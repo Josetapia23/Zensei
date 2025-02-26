@@ -9,11 +9,11 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
+import NuevaVistaScreen from '../screens/NuevaVistaScreen'; // Nueva importación
 
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
-  // Manejo del botón de retroceso
   useEffect(() => {
     const backAction = () => {
       BackHandler.exitApp();
@@ -31,15 +31,29 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        screenOptions={{ headerShown: false }}
+        screenOptions={{
+          headerShown: false,
+          cardStyleInterpolator: ({ current, layouts }) => ({
+            cardStyle: {
+              transform: [
+                {
+                  translateY: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.height, 0],
+                  }),
+                },
+              ],
+            },
+          }),
+        }}
         initialRouteName="Splash"
       >
-        {/* Pantallas principales en root stack */}
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="NuevaVista" component={NuevaVistaScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

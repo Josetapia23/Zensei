@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 const GradientOverlay = ({ 
   colors, 
-  locations, 
-  start = { x: 1, y: 0 }, 
+  locations = [0, 1], 
+  start = { x: 0, y: 0 }, 
   end = { x: 0, y: 1 }, 
   style 
 }) => {
@@ -35,12 +35,6 @@ GradientOverlay.propTypes = {
     PropTypes.object,
     PropTypes.array
   ])
-};
-
-GradientOverlay.defaultProps = {
-  locations: [0, 1],
-  start: { x: 0, y: 0 },
-  end: { x: 0, y: 1 }
 };
 
 export default GradientOverlay;
