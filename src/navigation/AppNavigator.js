@@ -9,7 +9,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
-import NuevaVistaScreen from '../screens/NuevaVistaScreen'; // Nueva importación
+import EstadoDeAnimoScreen from '../screens/EstadoDeAnimoScreen';
 
 const Stack = createStackNavigator();
 
@@ -53,7 +53,7 @@ export default function AppNavigator() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="NuevaVista" component={NuevaVistaScreen} />
+        <Stack.Screen name="estado" component={EstadoDeAnimoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
