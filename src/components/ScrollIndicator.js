@@ -21,7 +21,7 @@ const ScrollIndicator = () => {
         useNativeDriver: true,
       }),
     ]).start(() => {
-      navigation.navigate('estado');
+      navigation.navigate('Estado');
     });
   };
 

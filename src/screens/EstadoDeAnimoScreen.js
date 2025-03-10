@@ -39,7 +39,7 @@ const EstadoDeAnimoScreen = ({ navigation }) => {
   const handleEmotionSelect = (emotion) => {
     setSelectedEmotion(emotion);
     // Navegar a siguiente vista después de selección
-    setTimeout(() => navigation.navigate('SiguienteVista'), 500);
+    setTimeout(() => navigation.navigate('Respiraciones'), 500);
   };
 
   return (
