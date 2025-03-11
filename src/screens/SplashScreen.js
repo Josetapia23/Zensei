@@ -5,8 +5,8 @@ import * as Font from 'expo-font';
 export default function SplashScreen({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const fadeAnim = new Animated.Value(0);
-  const textTop = "ZEN";
-  const textBottom = "SEI";
+  const textTop = "Zen";
+  const textBottom = "sei";
 
   // Cargar fuente personalizada
   useEffect(() => {

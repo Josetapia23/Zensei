@@ -2,15 +2,49 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Concentrarse from './respiraciones/Concentrarse';
+import PromoverCreatividad from './respiraciones/PromoverCreatividad';
+import PrepararseAreunion from './respiraciones/PrepararseAreunion';
+import Dormir from './respiraciones/Dormir';
+import ManejarEstres from './respiraciones/ManejarEstres ';
+import ReducirAnsiedad from './respiraciones/ReducirAnsiedad';
+
 
 const { width } = Dimensions.get('window');
 
 const CarruselRespiraciones = () => {
-  const respiraciones = Array(6).fill({
-    title: 'Concentrarse',
-    duration: '4-4-4-4',
-    Component: Concentrarse
-  });
+  const respiraciones = [
+    {
+      title: 'Concentrarse',
+      duration: '4-4-4-4',
+      Component: Concentrarse
+    },
+    {
+      title: 'Promover Creatividad',
+      duration: '5-5-5-5',
+      Component: PromoverCreatividad
+    },  
+    {
+      title: 'Prepararse para una reunión',
+      duration: '3-3-3-3',
+      Component: PrepararseAreunion
+    },
+    {
+      title: 'Manejar el estrés',
+      duration: '6-6-6-6',
+      Component: ManejarEstres
+      
+    },
+    {
+      title: 'Dormir',
+      duration: '4-7-8',
+      Component: Dormir
+    },
+    {
+      title: 'Reducir la ansiedad',
+      duration: '4-7-8',
+      Component: ReducirAnsiedad
+    }
+  ];
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
