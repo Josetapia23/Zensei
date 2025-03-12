@@ -10,4 +10,4 @@ const ManejarEstres = ({ width = 132, height = 153, color = '#FCFCFC' }) => (
   </Svg>
 );
 
-export default Man;
+export default ManejarEstres;

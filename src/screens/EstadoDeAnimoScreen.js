@@ -71,7 +71,7 @@ const EstadoDeAnimoScreen = ({ navigation }) => {
           end={{ x: 1, y: 1 }}
         >
           <Text style={styles.title}>¿Cómo te sientes hoy?</Text>
-          <Text style={styles.subtitle}>Escoge tu humor actual</Text>
+          <Text style={styles.subtitle}>Escoge tu estado actual</Text>
         </LinearGradient>
 
         {/* Degradado central para las caritas */}

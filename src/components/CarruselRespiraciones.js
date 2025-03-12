@@ -8,7 +8,6 @@ import Dormir from './respiraciones/Dormir';
 import ManejarEstres from './respiraciones/ManejarEstres ';
 import ReducirAnsiedad from './respiraciones/ReducirAnsiedad';
 
-
 const { width } = Dimensions.get('window');
 
 const CarruselRespiraciones = () => {
@@ -22,7 +21,7 @@ const CarruselRespiraciones = () => {
       title: 'Promover Creatividad',
       duration: '5-5-5-5',
       Component: PromoverCreatividad
-    },  
+    },
     {
       title: 'Prepararse para una reunión',
       duration: '3-3-3-3',
@@ -32,7 +31,6 @@ const CarruselRespiraciones = () => {
       title: 'Manejar el estrés',
       duration: '6-6-6-6',
       Component: ManejarEstres
-      
     },
     {
       title: 'Dormir',
