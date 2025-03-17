@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 import Concentrarse from './respiraciones/Concentrarse';
 import PromoverCreatividad from './respiraciones/PromoverCreatividad';
 import PrepararseAreunion from './respiraciones/PrepararseAreunion';
@@ -11,41 +12,65 @@ import ReducirAnsiedad from './respiraciones/ReducirAnsiedad';
 const { width } = Dimensions.get('window');
 
 const CarruselRespiraciones = () => {
+  // Obtenemos el objeto de navegación
+  const navigation = useNavigation();
+
   const respiraciones = [
     {
+      id: 'concentrarse',
       title: 'Concentrarse',
       duration: '4-4-4-4',
       Component: Concentrarse
     },
     {
+      id: 'creatividad',
       title: 'Promover Creatividad',
       duration: '5-5-5-5',
       Component: PromoverCreatividad
     },
     {
+      id: 'reunion',
       title: 'Prepararse para una reunión',
       duration: '3-3-3-3',
       Component: PrepararseAreunion
     },
     {
+      id: 'estres',
       title: 'Manejar el estrés',
       duration: '6-6-6-6',
       Component: ManejarEstres
     },
     {
+      id: 'dormir',
       title: 'Dormir',
       duration: '4-7-8',
       Component: Dormir
     },
     {
+      id: 'ansiedad',
       title: 'Reducir la ansiedad',
       duration: '4-7-8',
       Component: ReducirAnsiedad
     }
   ];
 
+  // Navegamos a ConectarBuddyScreen en lugar de directamente a CronoetroScreen
+  const handleRespiracionSelect = (item) => {
+    navigation.navigate('ConectarBuddy', {
+      respiracion: {
+        id: item.id,
+        title: item.title,
+        duration: item.duration,
+        componentName: item.Component.name
+      }
+    });
+  };
+
   const renderItem = ({ item }) => (
-    <View style={styles.card}>
+    <TouchableOpacity 
+      style={styles.card}
+      onPress={() => handleRespiracionSelect(item)}
+    >
       <LinearGradient
         colors={['rgba(255,255,255,0.15)', 'rgba(255,255,255,0.53)']}
         style={styles.cardGradient}
@@ -58,7 +83,7 @@ const CarruselRespiraciones = () => {
           <Text style={styles.duration}>{item.duration}</Text>
         </View>
       </LinearGradient>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -66,7 +91,7 @@ const CarruselRespiraciones = () => {
       <FlatList
         data={respiraciones}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToAlignment="center"
