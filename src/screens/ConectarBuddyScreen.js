@@ -9,7 +9,7 @@ import Concentrarse from '../components/respiraciones/Concentrarse';
 import PromoverCreatividad from '../components/respiraciones/PromoverCreatividad';
 import PrepararseAreunion from '../components/respiraciones/PrepararseAreunion';
 import Dormir from '../components/respiraciones/Dormir';
-import ManejarEstres from '../components/respiraciones/ManejarEstres ';
+import ManejarEstres from '../components/respiraciones/ManejarEstres';
 import ReducirAnsiedad from '../components/respiraciones/ReducirAnsiedad';
 
 const { width, height } = Dimensions.get('window');

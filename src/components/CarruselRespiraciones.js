@@ -6,7 +6,7 @@ import Concentrarse from './respiraciones/Concentrarse';
 import PromoverCreatividad from './respiraciones/PromoverCreatividad';
 import PrepararseAreunion from './respiraciones/PrepararseAreunion';
 import Dormir from './respiraciones/Dormir';
-import ManejarEstres from './respiraciones/ManejarEstres ';
+import ManejarEstres from './respiraciones/ManejarEstres';
 import ReducirAnsiedad from './respiraciones/ReducirAnsiedad';
 
 const { width } = Dimensions.get('window');
