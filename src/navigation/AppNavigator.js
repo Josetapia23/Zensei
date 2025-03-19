@@ -14,6 +14,9 @@ import RespiracionesScreen from '../screens/RespiracionesScreen';
 import CronoetroScreen from '../screens/CronoetroScreen';
 import EstadoDeAnimoScreen from '../screens/EstadoDeAnimoScreen';
 import ConectarBuddyScreen from '../screens/ConectarBuddyScreen';
+import CuestionarioBase  from '../screens/CuestionarioBase';
+import CuestionarioT2 from '../screens/CuestionarioT2';
+import CuestionarioFinal from '../screens/CuestionarioFinal';
 
 const Stack = createStackNavigator();
 
@@ -80,6 +83,9 @@ const AppNavigator = () => {
         <Stack.Screen name="CronoetroScreen" component={CronoetroScreen} />
         <Stack.Screen name="Estado" component={EstadoDeAnimoScreen} />
         <Stack.Screen name="ConectarBuddy" component={ConectarBuddyScreen} />
+        <Stack.Screen name="Cuestionario" component={CuestionarioBase} />
+        <Stack.Screen name="Cuestionariot2" component={CuestionarioT2} />
+        <Stack.Screen name="CuestionarioFinal" component={CuestionarioFinal} />
       </Stack.Navigator>
     </NavigationContainer>
   );

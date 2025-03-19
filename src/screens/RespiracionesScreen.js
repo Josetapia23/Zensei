@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, ImageBackground, StyleSheet, Image, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 import CarruselRespiraciones from '../components/CarruselRespiraciones';
 
 const { width, height } = Dimensions.get('window');
 
 const RespiracionesScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -28,7 +31,7 @@ const RespiracionesScreen = () => {
         </View>
 
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Opciones</Text>  
+          <Text style={styles.title}>Respiraciones</Text>  
         </View>
 
         <View style={styles.svgContainer}>
@@ -51,7 +54,7 @@ const RespiracionesScreen = () => {
         {/* Texto de enlace */}
         <TouchableOpacity 
           style={styles.bottomTextContainer}
-          onPress={() => console.log('Navegar a formularios')} // Actualizar con tu navegación
+          onPress={() => navigation.navigate('Cuestionario')}
         >
           <Text style={styles.bottomText}>¿No encuentras la opción que necesitas?</Text>
         </TouchableOpacity>
@@ -69,12 +72,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#76B3E5',
-    
   },
   backgroundImage: {
     flex: 1,
     width: '100%',
-    
   },
   topOverlay: {
     position: 'absolute',
@@ -92,7 +93,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 200,
-    
   },
   titleContainer: {
     position: 'absolute',
@@ -105,14 +105,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#76B3E5',
     letterSpacing: -0.4
-
   },
   svgContainer: {
     position: 'absolute',
     top: '35%',
     alignSelf: 'center',
     zIndex: 2,
-    ackgroundColor: 'rgba(255, 255, 255, 0)',
+    backgroundColor: 'rgba(255, 255, 255, 0)',
     borderRadius: 20,
     padding: 15,
   },
