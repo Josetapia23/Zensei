@@ -3,10 +3,12 @@ import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image } from
 import { LinearGradient } from 'expo-linear-gradient';
 import InputField from '../components/inputs/InputField';
 import BottomGradient from '../components/gradients/BottomGradient';
+import PasswordRecoveryModal from '../components/PasswordRecoveryModal';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showRecovery, setShowRecovery] = useState(false);
 
   const handleLogin = () => {
     // Lógica de inicio de sesión
@@ -43,9 +45,18 @@ const LoginScreen = ({ navigation }) => {
               onChangeText={setPassword}
             />
 
-            <TouchableOpacity style={styles.forgotPassword}>
+            <TouchableOpacity
+              style={styles.forgotPassword}
+              onPress={() => setShowRecovery(true)} // Cambiamos la navegación
+            >
               <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
+
+            {/* Añadimos el modal */}
+            <PasswordRecoveryModal
+              visible={showRecovery}
+              onClose={() => setShowRecovery(false)}
+            />
 
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <LinearGradient
