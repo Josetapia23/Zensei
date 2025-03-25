@@ -2,7 +2,16 @@ import React from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const InputField = ({ label, placeholder, secureTextEntry, value, onChangeText }) => {
+const InputField = ({ 
+  label, 
+  placeholder, 
+  secureTextEntry, 
+  value, 
+  onChangeText, 
+  error, 
+  keyboardType = 'default', 
+  ...rest 
+}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -13,14 +22,17 @@ const InputField = ({ label, placeholder, secureTextEntry, value, onChangeText }
         end={{ x: 1, y: 0 }}
       >
         <TextInput
-          style={styles.input}
+          style={[styles.input, error && styles.inputError]}
           placeholder={placeholder}
           placeholderTextColor="#84B1E0"
           secureTextEntry={secureTextEntry}
           value={value}
           onChangeText={onChangeText}
+          keyboardType={keyboardType}
+          {...rest}
         />
       </LinearGradient>
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
@@ -46,6 +58,15 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: 16,
     color: '#1E4673',
+  },
+  inputError: {
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5,
   },
 });
 

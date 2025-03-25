@@ -1,22 +1,91 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Alert, Image, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import InputField from '../components/inputs/InputField';
 import BottomGradient from '../components/gradients/BottomGradient';
 import PasswordRecoveryModal from '../components/PasswordRecoveryModal';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, firestore } from '../config/firebaseConfig';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showRecovery, setShowRecovery] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
-    // Lógica de inicio de sesión
-    navigation.navigate('Home');
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleLogin = async () => {
+    let valid = true;
+    let newErrors = {};
+
+    if (!email) {
+      newErrors.email = 'El correo electrónico es obligatorio';
+      valid = false;
+    } else if (!validateEmail(email)) {
+      newErrors.email = 'El formato del correo electrónico no es válido';
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = 'La contraseña es obligatoria';
+      valid = false;
+    } else if (password.length < 6) {
+      newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!valid) return;
+
+    setLoading(true);
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Actualizar última fecha de login
+      await updateDoc(doc(firestore, 'users', user.uid), {
+        'profile.lastLogin': serverTimestamp()
+      });
+
+      navigation.navigate('Home');
+    } catch (error) {
+      // Manejo de errores específicos de Firebase
+      let errorMessage = 'Error de inicio de sesión';
+      switch (error.code) {
+        case 'auth/user-not-found':
+          errorMessage = 'No se encontró un usuario con este correo';
+          break;
+        case 'auth/wrong-password':
+          errorMessage = 'Contraseña incorrecta';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'Correo electrónico inválido';
+          break;
+        case 'auth/too-many-requests':
+          errorMessage = 'Demasiados intentos. Por favor, intenta más tarde';
+          break;
+      }
+
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <ImageBackground
         source={require('../assets/images/fondoLetra.png')}
         style={styles.background}
@@ -34,36 +103,55 @@ const LoginScreen = ({ navigation }) => {
               label="Correo electrónico"
               placeholder="Zen@correo.com"
               value={email}
-              onChangeText={setEmail}
+              onChangeText={(text) => {
+                setEmail(text);
+                // Limpiar error de email si se está escribiendo
+                if (errors.email) {
+                  setErrors(prev => ({...prev, email: ''}));
+                }
+              }}
+              error={errors.email}
             />
 
             <InputField
               label="Contraseña"
               placeholder="Ingresa tu contraseña"
-              secureTextEntry
+              secureTextEntry={!showPassword}
               value={password}
-              onChangeText={setPassword}
+              onChangeText={(text) => {
+                setPassword(text);
+                // Limpiar error de contraseña si se está escribiendo
+                if (errors.password) {
+                  setErrors(prev => ({...prev, password: ''}));
+                }
+              }}
+              error={errors.password}
+              icon={showPassword ? 'eye-off' : 'eye'}
+              onIconPress={() => setShowPassword(!showPassword)}
             />
 
             <TouchableOpacity
               style={styles.forgotPassword}
-              onPress={() => setShowRecovery(true)} // Cambiamos la navegación
+              onPress={() => setShowRecovery(true)}
             >
               <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
 
-            {/* Añadimos el modal */}
             <PasswordRecoveryModal
               visible={showRecovery}
               onClose={() => setShowRecovery(false)}
             />
 
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
               <LinearGradient
                 colors={['#76B3E5', '#D0E1F3']}
                 style={styles.buttonGradient}
               >
-                <Text style={styles.buttonText}>Ingresar</Text>
+                {loading ? (
+                  <ActivityIndicator color="#FFF" />
+                ) : (
+                  <Text style={styles.buttonText}>Ingresar</Text>
+                )}
               </LinearGradient>
             </TouchableOpacity>
 
@@ -73,11 +161,10 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.registerLink}>Crear una cuenta Zensei</Text>
               </TouchableOpacity>
             </View>
-
           </View>
         </View>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

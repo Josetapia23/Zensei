@@ -23,6 +23,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebaseApiKey": "AIzaSyB2wdWlDteKhMHtWFCOYjSgzy1vtNVOGrU",
+      "firebaseAuthDomain": "zensei-ea1ec.firebaseapp.com",
+      "firebaseProjectId": "zensei-ea1ec",
+      "firebaseStorageBucket": "zensei-ea1ec.firebasestorage.app",
+      "firebaseMessagingSenderId": "900160471260",
+      "firebaseAppId": "1:900160471260:web:5a066ce7d8eb7934213419",
+      "firebaseMeasurementId": "G-B4ZB833P4T"
     }
   }
 }

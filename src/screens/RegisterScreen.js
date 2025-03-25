@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, BackHandler} from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, BackHandler, Alert} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import InputField from '../components/inputs/InputField';
 import BottomGradient from '../components/gradients/BottomGradient';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, firestore } from '../config/firebaseConfig';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -10,21 +13,37 @@ const RegisterScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setname] = useState('');
 
-  const handleRegister = () => {
-    // Lógica de registro
-    navigation.navigate('Home');
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Las contraseñas no coinciden');
+      return;
+    }
+
+    try {
+      // Crear usuario en Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Guardar información adicional en Firestore
+      await setDoc(doc(firestore, 'users', user.uid), {
+        profile: {
+          name,
+          email,
+          createdAt: serverTimestamp(),
+          lastLogin: serverTimestamp()
+        },
+        appData: {
+          breathingSessionsCount: 0,
+          moodTracker: [],
+          buddyConnections: []
+        }
+      });
+
+      navigation.navigate('Home');
+    } catch (error) {
+      Alert.alert('Error de registro', error.message);
+    }
   };
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        navigation.navigate('Welcome');
-        return true;
-      }
-    );
-  
-    return () => backHandler.remove();
-  }, [navigation]);
 
   return (
     <View style={styles.container}>
